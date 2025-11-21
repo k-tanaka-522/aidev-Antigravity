@@ -1,0 +1,68 @@
+# チームワークフロー (Team Workflow)
+
+本プロジェクトは、以下のフェーズに従って進行する。各フェーズの完了には、指定されたエージェントによるレビューと承認が必須である。
+
+## 1. Planning Phase (計画)
+*   **主担当**: PM, Consultant
+*   **プロセス**:
+    1.  PMがユーザー要望をヒアリング。
+    2.  Consultantが`req_def_template.md`を用いて要件定義書を作成。
+    3.  PMが要件定義書をレビューし、ユーザー承認を得る。
+*   **完了条件**: ユーザー承認済みの要件定義書。
+
+## 2. Design Phase (設計)
+*   **主担当**: Architect, UI/UX, Security
+*   **プロセス**:
+    1.  Architectが`arch_design_template.md`を用いてシステム設計書を作成。
+    2.  UI/UXがデザインモックを作成し、`ui_ux_review_template.md`でレビュー。
+    3.  Securityが設計段階でのセキュリティリスクを`security_audit_template.md`で監査。
+*   **完了条件**: 各専門家の承認印がある設計書。
+
+## 3. Environment Phase (環境構築)
+*   **主担当**: DevOps
+*   **プロセス**:
+    1.  DevOpsが`infra_config_template.md`に基づき、開発・テスト環境を構築（Dockerfileなど）。
+    2.  Coderが環境の動作を確認。
+*   **完了条件**: 再現可能な開発環境の確立。
+
+## 4. Implementation Phase (実装)
+*   **主担当**: Coder
+*   **プロセス**:
+    1.  Coderが設計書に基づきコードを実装。
+    2.  Coderが単体テストを実行し、パスすることを確認。
+*   **完了条件**: ビルド可能で単体テストを通過するコード。
+
+## 5. Verification Phase (検証)
+*   **主担当**: QA, Security, UI/UX
+*   **プロセス**:
+    1.  QAが`test_plan_template.md`に基づき機能テスト・E2Eテストを実行。
+    2.  Securityがコードレベルの脆弱性診断を実施。
+    3.  UI/UXが実装された画面のルック＆フィールを確認。
+    4.  問題があればCoderにチケットを発行し、修正→再テストのループを回す。
+*   **完了条件**: 全テストパス、重大な脆弱性・UX欠陥ゼロ。
+
+## 6. Delivery Phase (納品)
+*   **主担当**: PM
+*   **プロセス**:
+    1.  PMが全ての成果物を統合し、最終確認。
+    2.  ユーザーに納品し、検収を受ける。
+*   **完了条件**: ユーザーによる検収完了。
+
+---
+
+## 7. Kaizen Phase (自己進化)
+**プロジェクト完了後、直ちにこのフェーズに移行する。**
+
+*   **主担当**: CKO
+*   **参加者**: 全エージェント
+*   **プロセス**:
+    1.  **振り返り (Retrospective)**: 全エージェントは、今回のプロジェクトでの「成功点」「失敗点」「テンプレートの使いにくかった点」をCKOに提出する。
+    2.  **分析**: CKOはフィードバックを分析し、根本原因を特定する。
+    3.  **更新 (Update)**: CKOは以下の資産を更新する。
+        *   `.agent_config/templates/*.md` (テンプレートの改善)
+        *   `.agent_config/workflow.md` (プロセスの改善)
+        *   `.agent_config/roles.md` (役割の微調整)
+        *   `.agent_config/knowledge/lessons_learned.md` (ナレッジの蓄積)
+    4.  **承認**: PMが変更内容を承認し、次回のプロジェクトに適用する。
+
+*   **完了条件**: 更新された設定ファイルのコミット。
