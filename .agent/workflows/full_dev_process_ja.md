@@ -24,6 +24,7 @@
 * **インプット:** ユーザーからの高レベルなビジネス目標。
 * **テンプレート:** `.agent/templates/02_要件定義書テンプレート.md`
 * **タスク:** 実現可能性を分析し、テンプレートを用いて中核となるビジネス要件を明確化する。
+* **ガイド:** `.agent/guides/2.2_要件定義フェーズ/2.2.4_製造物_要件定義書構成.md`
 * **アウトプット:** `requirements/initial_spec.md`
 
 ### 1.2 プロジェクト計画策定
@@ -49,6 +50,7 @@
 * **インプット:** `design/user_stories.md`
 * **テンプレート:** `.agent/templates/04_基本設計書テンプレート.md`
 * **技術標準:** `.agent/standards/41_app/api_design.md`, `.agent/standards/41_app/database.md`
+* **ガイド:** `.agent/guides/2.3_設計フェーズ/2.3.5_製造物_基本設計書構成.md`
 * **タスク:** テンプレートと技術標準に従い、マイクロサービス/コンポーネントの設計、データフロー、技術スタックの選定を行う。
 * **アウトプット:** `architecture/app_design.md`
 
@@ -57,6 +59,7 @@
 * **インプット:** `architecture/app_design.md`
 * **テンプレート:** `.agent/templates/03_インフラ構成書テンプレート.md`
 * **技術標準:** `.agent/standards/42_infra/` (IaC構成方針等), `.agent/standards/49_common/security.md`
+* **ガイド:** `.agent/guides/2.3_設計フェーズ/2.3.8_インフラ設計パターン選定.md`
 * **タスク:** アプリケーション設計に基づき、クラウドインフラ、ネットワーク、CI/CDパイプラインをIaCを使用して設計する。
 * **アウトプット:** `infrastructure/tf_plan.md`、`infrastructure/cicd_pipeline.yaml`
 
@@ -78,6 +81,7 @@
 * **テンプレート:** `.agent/templates/05_詳細設計書テンプレート.md`, `.agent/templates/11_コーディング規約_共通編テンプレート.md`
 * **技術標準:** `.agent/standards/41_app/` (API/DB設計への準拠)
 * **タスク:** 詳細設計書を作成した後、すべての機能のソースコードと、対応する単体テストを実装する。
+* **ガイド:** `.agent/guides/2.4_実装フェーズ/INDEX.md`
 * **アウトプット:** `src/**/*.py`、`src/**/*_test.py`
 
 ### 3.2 監視・ロギング構成
@@ -86,6 +90,7 @@
 * **テンプレート:** `.agent/templates/09_運用マニュアルテンプレート.md`
 * **技術標準:** `.agent/standards/42_infra/` (監視・アラート設計)
 * **タスク:** IaC内に、包括的な監視、アラート、一元化されたロギングシステムを構成する。
+* **ガイド:** `.agent/guides/2.3_設計フェーズ/2.3.12_運用設計ガイド.md`
 * **アウトプット:** `infrastructure/monitoring_config.yaml`
 
 ---
