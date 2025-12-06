@@ -40,12 +40,12 @@ code .
 すでに進行中のプロジェクトに、Antigravityチームを招聘する場合の手順です。
 
 ```bash
-# Windows (PowerShell)
+# Git Bash
 cd your-existing-project
 git clone https://github.com/k-tanaka-522/aidev-antigravity.git .antigravity-temp
-Copy-Item -Path ".\.antigravity-temp\.agent_config" -Destination "." -Recurse
-Copy-Item -Path ".\.antigravity-temp\PROJECT_STRUCTURE.md" -Destination "."
-Remove-Item -Path ".\.antigravity-temp" -Recurse -Force
+cp -r .antigravity-temp/.agent .
+cp .antigravity-temp/PROJECT_STRUCTURE.md .
+rm -rf .antigravity-temp
 ```
 
 ---
