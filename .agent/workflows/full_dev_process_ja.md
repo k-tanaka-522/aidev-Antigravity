@@ -48,13 +48,15 @@
 * **アクター:** アプリケーションアーキテクトエージェント
 * **インプット:** `design/user_stories.md`
 * **テンプレート:** `.agent/templates/04_基本設計書テンプレート.md`
-* **タスク:** テンプレートに従い、マイクロサービス/コンポーネントの設計、データフロー、技術スタックの選定を行う。
+* **技術標準:** `.agent/standards/41_app/api_design.md`, `.agent/standards/41_app/database.md`
+* **タスク:** テンプレートと技術標準に従い、マイクロサービス/コンポーネントの設計、データフロー、技術スタックの選定を行う。
 * **アウトプット:** `architecture/app_design.md`
 
 ### 2.2 インフラストラクチャ設計
 * **アクター:** インフラアーキテクトエージェント
 * **インプット:** `architecture/app_design.md`
 * **テンプレート:** `.agent/templates/03_インフラ構成書テンプレート.md`
+* **技術標準:** `.agent/standards/42_infra/` (IaC構成方針等), `.agent/standards/49_common/security.md`
 * **タスク:** アプリケーション設計に基づき、クラウドインフラ、ネットワーク、CI/CDパイプラインをIaCを使用して設計する。
 * **アウトプット:** `infrastructure/tf_plan.md`、`infrastructure/cicd_pipeline.yaml`
 
@@ -62,6 +64,7 @@
 * **アクター:** セキュリティエージェント
 * **インプット:** `architecture/app_design.md`、`infrastructure/tf_plan.md`
 * **テンプレート:** `.agent/templates/07_セキュリティ監査報告書テンプレート.md`
+* **技術標準:** `.agent/standards/49_common/security.md`
 * **タスク:** 設計初期段階で潜在的な脅威を特定し、セキュリティ制御を定義する。
 * **アウトプット:** `security/controls_checklist.md`
 
@@ -73,6 +76,7 @@
 * **アクター:** コーダーエージェント
 * **インプット:** `architecture/app_design.md`、`design/user_stories.md`
 * **テンプレート:** `.agent/templates/05_詳細設計書テンプレート.md`, `.agent/templates/11_コーディング規約_共通編テンプレート.md`
+* **技術標準:** `.agent/standards/41_app/` (API/DB設計への準拠)
 * **タスク:** 詳細設計書を作成した後、すべての機能のソースコードと、対応する単体テストを実装する。
 * **アウトプット:** `src/**/*.py`、`src/**/*_test.py`
 
@@ -80,6 +84,7 @@
 * **アクター:** SREエージェント
 * **インプット:** `infrastructure/tf_plan.md`
 * **テンプレート:** `.agent/templates/09_運用マニュアルテンプレート.md`
+* **技術標準:** `.agent/standards/42_infra/` (監視・アラート設計)
 * **タスク:** IaC内に、包括的な監視、アラート、一元化されたロギングシステムを構成する。
 * **アウトプット:** `infrastructure/monitoring_config.yaml`
 
@@ -97,6 +102,7 @@
 ### 4.2 最終品質保証とリリース承認
 * **アクター:** QAエージェント
 * **インプット:** `test_reports/e2e_results.json`、`security/controls_checklist.md`（検証済み）
+* **技術標準:** `.agent/standards/` (全般的な品質基準への適合確認)
 * **タスク:** すべての成果物（設計、コード、テストカバレッジ、セキュリティコンプライアンス）をレビューする。すべてのチェックが通過した場合、リリースを承認する。
 * **アウトプット:** `qa/release_approval.md`（ステータス: 承認済み/却下）
 
