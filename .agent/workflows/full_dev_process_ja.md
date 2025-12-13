@@ -1,118 +1,107 @@
-# 🚀 開発ライフサイクル全体オーケストレーション
+# 🚀 開発ライフサイクル全体オーケストレーション (Enterprise Model)
 
-## 🎯 High-Level Goal
-10種類の専門AIエージェントチームを活用し、定義、設計、実装、テスト、セキュリティ確保、デプロイメントの全工程を実行し、定義された品質およびセキュリティ基準を満たす新しいソフトウェアシステムを構築する。
+## 🎯 上位目標 (High-Level Goal)
+ユーザーとの対話を通じて「真に求められている価値」を特定し、その価値を最大化するソフトウェアシステムを構築する。
+**ミッションコントロール (Mission Control)** モデルにより、複数の専門エージェントが並列して自律的にタスクを遂行し、厳格な検証ゲート（Verification Gate）を通過した成果物のみをリリースする。
 
-## 👥 Agents Involved (Actors)
-* **PMエージェント:** Project Manager.
-* **システムコンサルタントエージェント:** Initial requirement analysis.
-* **UI/UXデザイナーエージェント:** User flow, wireframes.
-* **アプリケーションアーキテクトエージェント:** Component design.
-* **インフラアーキテクトエージェント:** Cloud infrastructure and CI/CD planning.
-* **セキュリティエージェント:** Vulnerability identification and security control definition.
-* **コーダーエージェント:** Source code and unit test implementation.
-* **テスターエージェント:** Integration and End-to-End (E2E) test execution.
-* **QAエージェント:** Final quality review and release gate approval.
-* **SREエージェント:** Monitoring setup and production deployment execution.
+## 👥 参加エージェント (Agents Involved)
+* **PMエージェント (Mission Control):** プロジェクトマネージャー。タスク管理と並列フローの指揮。
+* **システムコンサルタントエージェント:** 初期要件分析。
+* **UI/UXデザイナーエージェント:** ユーザーフロー、ワイヤーフレーム作成。
+* **アプリケーションアーキテクトエージェント:** コンポーネント設計。
+* **インフラアーキテクトエージェント:** クラウドインフラおよびCI/CD計画。
+* **セキュリティエージェント:** 脆弱性特定。
+* **コーダーエージェント (バックエンド / フロントエンド):** ソースコードおよび単体テスト実装。
+* **QAエージェント (検証):** **Browser Agent** を使用した視覚的E2Eテスト。
+* **SREエージェント:** 監視設定および本番デプロイ。
 
 ---
 
-## フェーズ 1: 定義と計画
+## フェーズ 1: 定義と計画 (Definition & Planning)
 
 ### 1.1 初期要件定義と実現可能性調査
 * **アクター:** システムコンサルタントエージェント
 * **インプット:** ユーザーからの高レベルなビジネス目標。
 * **テンプレート:** `.agent/templates/02_要件定義書テンプレート.md`
 * **タスク:** 実現可能性を分析し、テンプレートを用いて中核となるビジネス要件を明確化する。
-* **ガイド:** `.agent/guides/2.2_要件定義フェーズ/2.2.4_製造物_要件定義書構成.md`
 * **アウトプット:** `requirements/initial_spec.md`
 
-### 1.2 プロジェクト計画策定
+### 1.2 プロジェクト計画策定 (ミッション初期化)
 * **アクター:** PMエージェント
 * **インプット:** `requirements/initial_spec.md`
 * **テンプレート:** `.agent/templates/01_プロジェクトマネジメント計画書テンプレート.md`
-* **タスク:** WBS、スケジュール、リソース（エージェント）配分計画を含む包括的な計画を策定する。
-* **アウトプット:** `project_plan/schedule.md`
+* **タスク:** WBS、スケジュールに加え、**並列実行可能なタスク**（例：デザインとAPI設計）を識別する。
+* **アウトプット:** `project_plan/schedule.md`, `task.md` (更新)
 
 ### 1.3 ユーザー体験設計
 * **アクター:** UI/UXデザイナーエージェント
-* **インプット:** 中核となるビジネス要件。
-* **テンプレート:** `.agent/templates/08_UIUXレビュー報告書テンプレート.md` (レビュー時参照)
-* **タスク:** ユーザーフローを定義し、ワイヤーフレームを作成し、デザイン仕様を生成する。
+* **タスク:** ユーザーフローを定義し、ワイヤーフレームを作成。
 * **アウトプット:** `design/wireframes.png`、`design/user_stories.md`
 
 ---
 
-## フェーズ 2: 設計と基盤構築
+## フェーズ 2: 設計と基盤構築 (Parallel Design Tracks)
+*注: 2.1と2.2は依存関係がない限り並列で実行可能*
 
-### 2.1 アプリケーション設計
+### 2.1 アプリケーション設計トラック
 * **アクター:** アプリケーションアーキテクトエージェント
 * **インプット:** `design/user_stories.md`
-* **テンプレート:** `.agent/templates/04_基本設計書テンプレート.md`
-* **技術標準:** `.agent/standards/41_app/api_design.md`, `.agent/standards/41_app/database.md`
-* **ガイド:** `.agent/guides/2.3_設計フェーズ/2.3.5_製造物_基本設計書構成.md`
-* **タスク:** テンプレートと技術標準に従い、マイクロサービス/コンポーネントの設計、データフロー、技術スタックの選定を行う。
+* **技術標準:** `.agent/standards/tech/41_app/api_design.md`
+* **タスク:** マイクロサービス/コンポーネントの設計、API定義。
 * **アウトプット:** `architecture/app_design.md`
 
-### 2.2 インフラストラクチャ設計
+### 2.2 インフラストラクチャ設計トラック
 * **アクター:** インフラアーキテクトエージェント
-* **インプット:** `architecture/app_design.md`
-* **テンプレート:** `.agent/templates/03_インフラ構成書テンプレート.md`
-* **技術標準:** `.agent/standards/42_infra/` (IaC構成方針等), `.agent/standards/49_common/security.md`
 * **ガイド:** `.agent/guides/2.3_設計フェーズ/2.3.8_インフラ設計パターン選定.md`
-* **タスク:** アプリケーション設計に基づき、クラウドインフラ、ネットワーク、CI/CDパイプラインをIaCを使用して設計する。
-* **アウトプット:** `infrastructure/tf_plan.md`、`infrastructure/cicd_pipeline.yaml`
+* **タスク:** クラウドインフラ、ネットワーク、CI/CDパイプライン設計。
+* **アウトプット:** `infrastructure/tf_plan.md`
 
-### 2.3 セキュリティ要件定義
+### 2.3 セキュリティ監査 (設計ゲート)
 * **アクター:** セキュリティエージェント
-* **インプット:** `architecture/app_design.md`、`infrastructure/tf_plan.md`
-* **テンプレート:** `.agent/templates/07_セキュリティ監査報告書テンプレート.md`
-* **技術標準:** `.agent/standards/49_common/security.md`
-* **タスク:** 設計初期段階で潜在的な脅威を特定し、セキュリティ制御を定義する。
+* **タイミング:** 2.1 および 2.2 の完了後。
+* **タスク:** 設計段階でのセキュリティリスク分析。
 * **アウトプット:** `security/controls_checklist.md`
 
 ---
 
-## フェーズ 3: 実装とSRE準備
+## フェーズ 3: 実装 (Parallel Implementation Tracks)
 
-### 3.1 コード実装と単体テスト
-* **アクター:** コーダーエージェント
-* **インプット:** `architecture/app_design.md`、`design/user_stories.md`
-* **テンプレート:** `.agent/templates/05_詳細設計書テンプレート.md`, `.agent/templates/11_コーディング規約_共通編テンプレート.md`
-* **技術標準:** `.agent/standards/41_app/` (API/DB設計への準拠)
-* **タスク:** 詳細設計書を作成した後、すべての機能のソースコードと、対応する単体テストを実装する。
-* **ガイド:** `.agent/guides/2.4_実装フェーズ/INDEX.md`
-* **アウトプット:** `src/**/*.py`、`src/**/*_test.py`
+### 3.1 バックエンド実装
+* **アクター:** コーダーエージェント (バックエンド)
+* **インプット:** `architecture/app_design.md`
+* **タスク:** APIロジック、DB接続、単体テストの実装。
+* **検証:** `run_command` によるテスト通過確認。
+* **アウトプット:** `src/backend/**/*.py`
 
-### 3.2 監視・ロギング構成
-* **アクター:** SREエージェント
-* **インプット:** `infrastructure/tf_plan.md`
-* **テンプレート:** `.agent/templates/09_運用マニュアルテンプレート.md`
-* **技術標準:** `.agent/standards/42_infra/` (監視・アラート設計)
-* **タスク:** IaC内に、包括的な監視、アラート、一元化されたロギングシステムを構成する。
-* **ガイド:** `.agent/guides/2.3_設計フェーズ/2.3.12_運用設計ガイド.md`
-* **アウトプット:** `infrastructure/monitoring_config.yaml`
+### 3.2 フロントエンド実装
+* **アクター:** コーダーエージェント (フロントエンド)
+* **インプット:** `design/user_stories.md`, `architecture/app_design.md`
+* **タスク:** UIコンポーネント、画面遷移の実装。
+* **アウトプット:** `src/frontend/**/*.tsx`
 
 ---
 
-## フェーズ 4: 検証とデプロイ
+## フェーズ 4: 検証とデプロイ (Trust but Verify)
 
-### 4.1 統合テストとE2Eテストの実行
-* **アクター:** テスターエージェント
-* **インプット:** 実装済みコード、`design/user_stories.md`
-* **テンプレート:** `.agent/templates/06_テスト計画書テンプレート.md`
-* **タスク:** ユーザーストーリーに基づき、結合テストとエンドツーエンドテストを実行する。発見されたバグを報告し、修正を依頼する。
-* **アウトプット:** `test_reports/e2e_results.json`
+### 4.1 自動ブラウザ検証 (Auto-Verification)
+* **アクター:** QAエージェント
+* **スキル:** `.agent/skills/browser_verification.md`
+* **ツール:** `browser_subagent`
+* **タスク:**
+    1.  アプリケーションを起動する。
+    2.  `design/user_stories.md` に基づく重要シナリオをブラウザで実行する。
+    3.  **操作の録画**とスクリーンショットを取得する。
+* **アウトプット:** `test_reports/browser_verification_log.md`, **動画アーティファクト**
 
 ### 4.2 最終品質保証とリリース承認
 * **アクター:** QAエージェント
-* **インプット:** `test_reports/e2e_results.json`、`security/controls_checklist.md`（検証済み）
-* **技術標準:** `.agent/standards/` (全般的な品質基準への適合確認)
-* **タスク:** すべての成果物（設計、コード、テストカバレッジ、セキュリティコンプライアンス）をレビューする。すべてのチェックが通過した場合、リリースを承認する。
-* **アウトプット:** `qa/release_approval.md`（ステータス: 承認済み/却下）
+* **インプット:** ブラウザ検証動画、単体テスト結果、セキュリティチェックリスト。
+* **タスク:** 人間（ユーザー）に対し、**動画を提示して**承認を求める。
+* **アウトプット:** `qa/release_approval.md`
 
-### 4.3 プロダクションデプロイ
+### 4.3 本番デプロイ
 * **アクター:** SREエージェント
-* **インプット:** `qa/release_approval.md`（ステータス: 承認済み）
-* **タスク:** 最終的な本番デプロイメントスクリプトを実行し、ロールアウトの健全性を監視し、正常な安定化を確認する。
-* **アウトプット:** Production deployment logs, `deployment_status.md`
+* **条件:** `qa/release_approval.md` が承認済みであること。
+* **タスク:** 本番展開とスモークテスト。
+* **アウトプット:** `deployment_status.md`
+

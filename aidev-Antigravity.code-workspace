@@ -4,13 +4,7 @@
 			"path": "."
 		},
 		{
-			"path": "../niigatacity-kaigo-subsystem"
-		},
-		{
 			"path": "../aiDev"
-		},
-		{
-			"path": "../niigatacity-kaigo-subsystem_antigravity"
 		}
 	],
 	"settings": {}
