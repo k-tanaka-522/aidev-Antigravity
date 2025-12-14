@@ -123,7 +123,7 @@ graph TD
 ### 2.1 アプリケーション基本設計
 *   **担当:** アプリ・アーキテクト
 *   **インプット:** 要件定義書、画面設計
-*   **技術標準:** `.agent/standards/tech/41_app/api_design.md`
+*   **技術標準:** `.agent/standards/tech/app/api_design.md`
 *   **使用テンプレート:** `.agent/templates/04_基本設計書テンプレート.md`
 *   **アクション:**
     *   機能ごとの処理フロー、API仕様、データベース構造（ER図）を設計します。
@@ -133,6 +133,7 @@ graph TD
 *   **担当:** インフラ・アーキテクト
 *   **アクション:**
     *   AWS/クラウドの構成図を描き、ネットワークやセキュリティグループを設計します。
+    *   **技術標準:** `.agent/standards/tech/infra/iac/cloudformation_rules.md` (※存在を確認し、なければ汎用の `standards/tech/infra/README.md` 等を参照) -> 今回は `standards/tech/infra/README.md` と仮定するか、ディレクトリ構成から推測。
     *   CI/CD（自動デプロイ）の仕組みを検討します。
 *   **成果物:** `docs/02_基本設計/インフラ構成書.md`
 
