@@ -14,39 +14,39 @@ PMエージェントが進行役（オーケストレーター）となり、各
 
 ```mermaid
 graph TD
-    User((発注者)) -->|プロジェクト開始| PM[PM: 進行管理]
-    PM -->|Phase 1| Planning[要件定義・計画]
+    User((発注者)) -->|プロジェクト開始| PM["PM: 進行管理"]
+    PM -->|Phase 1| Planning["要件定義・計画"]
     
     subgraph Phase1 [Phase 1: 定義・計画]
-        Planning --> SysCon[要件ヒアリング]
-        SysCon --> UIUX[UI/UXラフ設計]
-        UIUX --> Plan[WBS・スケジュール作成]
+        Planning --> SysCon["要件ヒアリング"]
+        SysCon --> UIUX["UI/UXラフ設計"]
+        UIUX --> Plan["WBS・スケジュール作成"]
     end
 
-    Plan -->|Phase 2| Design[基本設計 (並行稼働)]
+    Plan -->|Phase 2| Design["基本設計 (並行稼働)"]
 
     subgraph Phase2 [Phase 2: 設計・方式策定]
-        Design --> AppArch[アプリ機能設計]
-        Design --> InfraArch[インフラ方式設計]
-        AppArch & InfraArch --> SecCheck[セキュリティチェック]
+        Design --> AppArch["アプリ機能設計"]
+        Design --> InfraArch["インフラ方式設計"]
+        AppArch & InfraArch --> SecCheck["セキュリティチェック"]
     end
 
-    SecCheck -->|Phase 3| Implem[製造・実装]
+    SecCheck -->|Phase 3| Implem["製造・実装"]
 
     subgraph Phase3 [Phase 3: 製造・実装 (並行稼働)]
-        Implem --> BackDev[バックエンド製造]
-        Implem --> FrontDev[フロントエンド製造]
+        Implem --> BackDev["バックエンド製造"]
+        Implem --> FrontDev["フロントエンド製造"]
     end
 
-    BackDev & FrontDev -->|Phase 4| Verify[テスト・検証]
+    BackDev & FrontDev -->|Phase 4| Verify["テスト・検証"]
 
     subgraph Phase4 [Phase 4: 品質保証]
-        Verify --> BrowserQA[ブラウザ自動操作テスト]
-        BrowserQA --> Approval{ユーザー検収}
+        Verify --> BrowserQA["ブラウザ自動操作テスト"]
+        BrowserQA --> Approval{"ユーザー検収"}
     end
 
-    Approval -->|OK| Release[本番リリース]
-    Approval -->|NG| Fix[改修・修正] --> Implem
+    Approval -->|OK| Release["本番リリース"]
+    Approval -->|NG| Fix["改修・修正"] --> Implem
 ```
 
 ---
