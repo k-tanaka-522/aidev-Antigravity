@@ -1,57 +1,67 @@
-# 01. アーキテクチャ概要 (Architecture Overview)
+# 01. アーキテクチャ概要
 
-## 1. ビジョン
-**"Antigravity Orchestration"**
-単なるコード生成AIではなく、組織化された専門家チームとして振る舞うエンタープライズ・エージェントシステム。
-PM、アーキテクト、実装者、QAがそれぞれの役割（Persona）を担い、定義された手順（Workflow）と基準（Standards）に従って自律的に協調動作する。
+## 1. 本システムのビジョン
 
-## 2. コア・コンセプト
+**Antigravity Orchestration**
 
-### A. Mission Control Model (司令塔モデル)
-プロジェクトの進捗や状態（State）は、常に**唯一の正解情報源 (Single Source of Truth)** である `task.md` と `project_status.md` に集約・管理される。
-PMエージェントがここを統括し、プロジェクト全体の状況を正確に把握する。
+本システムは、単なるコード生成AIではない。PM、アーキテクト、実装担当、QA担当といった複数の専門家が、それぞれの役割を担い、定義されたプロセスと品質基準に従って自律的に連携する「仮想開発チーム」である。
 
-### B. Explicit Orchestration (明示的オーケストレーション)
-「暗黙的な判断（良きに計らう）」を排除し、プロセスを標準化する。
-すべてのタスクは以下の4要素が明示的にリンクされた状態で実行される。
-*   **Role (誰が):** `personas/*.md`
-*   **Task (何を):** `workflows/*.md`
-*   **Rule (どの基準で):** `standards/**/*.md`
-*   **Format (どの形式で):** `templates/*.md`
+## 2. 基本設計思想
 
-### C. Parallel Design & Implementation (並並行開発)
-依存関係のないタスク（例：API設計とインフラ設計）は、異なるエージェントインスタンスによって並行して実行され、リードタイムを短縮する。
+### A. 司令塔モデル（Mission Control）
 
-### D. Evidence-based Review (エビデンスに基づくクロスレビュー)
-「動作するソフトウェア」を最優先事項とする。
-各フェーズの完了条件には必ず「クロスレビュー (Cross-Review)」が含まれる。
-レビューの際は、成果物そのものに加え、`Browser Subagent` 等による「動作検証エビデンス（動画/ログ）」の提示を必須とする。
+プロジェクトの進捗状況およびタスク管理情報は、`task.md` および `project_status.md` に**一元管理**される。この2ファイルが、プロジェクト全体における**唯一の正（Single Source of Truth）**となる。
+
+PMエージェントがこれらのファイルを管理し、全エージェントの作業状況を統括する。
+
+### B. 明示的な作業指示（Explicit Orchestration）
+
+「よしなに判断する」「空気を読む」といった暗黙的な処理を排除し、すべての作業指示を標準化する。
+
+各タスクは、以下の4要素が明示的に紐づけられた状態で実行される。
+
+| 要素 | 定義ファイル | 説明 |
+|:---|:---|:---|
+| **担当者（Role）** | `personas/*.md` | 作業を担当するエージェントの役割定義 |
+| **作業内容（Task）** | `workflows/*.md` | 実行すべきタスクと手順 |
+| **遵守基準（Rule）** | `standards/**/*.md` | 成果物が満たすべき品質基準・規約 |
+| **出力形式（Format）** | `templates/*.md` | 成果物のテンプレート |
+
+### C. 並行開発（Parallel Execution）
+
+依存関係のないタスク（例：API設計とインフラ設計）は、複数のエージェントによって同時並行で実行される。これにより、開発リードタイムを短縮する。
+
+### D. エビデンスに基づくクロスレビュー
+
+「動作するソフトウェア」を何よりも重視する。
+
+各フェーズの完了判定には、成果物そのものに加えて、動作検証の証跡（ブラウザ操作の録画、実行ログ等）の提示を必須とする。これらのエビデンスに基づき、クロスレビューを実施し、次フェーズへの移行可否を判断する。
 
 ## 3. システム構成図
 
 ```mermaid
 graph TD
-    User((User)) <-->|Order & Approval| MissionControl[Mission Control (PM)]
+    User((利用者)) <-->|指示・承認| PM["PM（司令塔）"]
     
-    subgraph Brain [System Knowledge (.agent)]
-        Workflows[Workflows]
-        Personas[Personas]
-        Standards[Standards]
-        Templates[Templates]
+    subgraph Knowledge ["システム知識ベース（.agent）"]
+        Workflows["ワークフロー定義"]
+        Personas["エージェント役割定義"]
+        Standards["品質基準・規約"]
+        Templates["成果物テンプレート"]
     end
     
-    MissionControl -->|Orchestrate| Brain
+    PM -->|参照・統括| Knowledge
     
-    subgraph Agents [Specialist Agents]
-        Con[Consultant]
-        Arch[Architect]
-        Dev[Coder]
-        QA[QA / Tester]
+    subgraph Agents ["専門エージェント群"]
+        Con["コンサルタント"]
+        Arch["アーキテクト"]
+        Dev["実装担当"]
+        QA["QA担当"]
     end
     
-    MissionControl -->|Dispatch Task| Agents
-    Brain -.->|Reference| Agents
+    PM -->|作業指示| Agents
+    Knowledge -.->|基準参照| Agents
     
-    Agents -->|Create| Artifacts[Outputs (docs/, src/)]
-    QA -->|Verify| Artifacts
+    Agents -->|成果物生成| Artifacts["成果物（docs/, src/）"]
+    QA -->|品質検証| Artifacts
 ```
