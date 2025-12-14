@@ -3,27 +3,27 @@
 ## 1. ビジョン
 **"Antigravity Orchestration"**
 単なるコード生成AIではなく、組織化された専門家チームとして振る舞うエンタープライズ・エージェントシステム。
-PM、アーキテクト、実装者、QAがそれぞれの役割（Persona）を演じ、定義された手順（Workflow）と基準（Standards）に従って自律的に協調動作する。
+PM、アーキテクト、実装者、QAがそれぞれの役割（Persona）を担い、定義された手順（Workflow）と基準（Standards）に従って自律的に協調動作する。
 
 ## 2. コア・コンセプト
 
 ### A. Mission Control Model (司令塔モデル)
-プロジェクトの状態（State）は常に単一の光源である `task.md` と `project_status.md` に集約される。
-PMエージェントがここを管理し、迷子になるエージェントを出さない。
+プロジェクトの進捗や状態（State）は、常に**唯一の正解情報源 (Single Source of Truth)** である `task.md` と `project_status.md` に集約・管理される。
+PMエージェントがここを統括し、プロジェクト全体の状況を正確に把握する。
 
 ### B. Explicit Orchestration (明示的オーケストレーション)
-「良きに計らう（暗黙知）」を排除する。
+「暗黙的な判断（良きに計らう）」を排除し、プロセスを標準化する。
 すべてのタスクは以下の4要素が明示的にリンクされた状態で実行される。
 *   **Role (誰が):** `personas/*.md`
 *   **Task (何を):** `workflows/*.md`
 *   **Rule (どの基準で):** `standards/**/*.md`
 *   **Format (どの形式で):** `templates/*.md`
 
-### C. Parallel Design & Implementation (並列実行)
-依存関係のないタスク（例：API設計とインフラ設計）は、異なるエージェントインスタンスによって並列に実行され、リードタイムを短縮する。
+### C. Parallel Design & Implementation (並並行開発)
+依存関係のないタスク（例：API設計とインフラ設計）は、異なるエージェントインスタンスによって並行して実行され、リードタイムを短縮する。
 
 ### D. Verification First (検証ファースト)
-「動くこと」が唯一の正義。
+「動作するソフトウェア」を最優先事項とする。
 各フェーズの完了条件には必ず「検証（Verification）」が含まれる。
 特に最終段階では `Browser Subagent` による「視覚的証拠（動画）」の提示を必須とする。
 

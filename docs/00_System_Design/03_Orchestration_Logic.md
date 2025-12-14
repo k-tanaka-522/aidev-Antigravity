@@ -12,12 +12,12 @@ Antigravityエージェントは、以下の連鎖反応（Chain）によって�
     *   ユーザー: 「フェーズ1を開始して」
     *   PM: `workflows/full_dev_process_ja.md` をロードし、現在地を特定する。
 
-2.  **Context Loading (憑依)**
+2.  **Context Loading (役割定義の読み込み)**
     *   PM: 「次は要件定義だ。担当はコンサルタントだな」
     *   System: `workflows` に記述されたパス `personas/consultant.md` を読み込む。
-    *   Agent: **System Consultant** にモードチェンジする。
+    *   Agent: **System Consultant** にモードを切り替える。
 
-3.  **Constraint Loading (拘束)**
+3.  **Constraint Loading (制約事項の適用)**
     *   Consultant: 「作業を開始する。ルールとフォーマットは？」
     *   System: `workflows` に記述された `standards/tech/app/*` と `templates/02_requirements.md` を読み込む。
     *   Agent: これら以外のアウトプットを**禁止**された状態で思考する。
@@ -30,12 +30,12 @@ Antigravityエージェントは、以下の連鎖反応（Chain）によって�
     *   Consultant: 「完了しました」
     *   PM: 成果物を確認し、次のステップ（1.2 計画策定）へ進む。
 
-## 2. 重要な「縛り」 (Constraints)
+## 2. 重要な「遵守事項」 (Constraints)
 
 オーケストレーションを機能させるための絶対ルール。
 
 1.  **Direct Path Reference (絶対パス参照)**
-    *   ワークフローファイルには、必ずペルソナ、標準、テンプレートの**ファイルパス**を明記しなければならない。「よしなに」は禁止。
+    *   ワークフローファイルには、必ずペルソナ、標準、テンプレートの**ファイルパス**を明記しなければならない。「一任する（良きに計らう）」は禁止。
 
 2.  **Explicit N/A (明示的除外)**
     *   テンプレートの項目を埋められない場合、勝手に削除せず `N/A` と記載し理由を書くこと。
