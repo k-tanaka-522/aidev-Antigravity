@@ -5,7 +5,9 @@
       "Bash(ls:*)",
       "Bash(for dir in \"c:/dev2/aidev-Antigravity/templates/\"*/)",
       "Bash(done)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }

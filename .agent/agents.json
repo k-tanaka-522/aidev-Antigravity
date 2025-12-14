@@ -1,0 +1,270 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/schemas/agents.schema.json",
+  "agents": {
+    "requirements-analyst": {
+      "name": "要件定義アナリスト",
+      "description": "ユーザーからのヒアリングを通じて、IPA準拠の要件定義書を作成します",
+      "role": "requirements_definition",
+      "capabilities": [
+        "ユーザーヒアリング（対話形式）",
+        "要件定義書テンプレート（RD001-RD007）の作成",
+        "機能要件・非機能要件の抽出",
+        "ユースケース分析"
+      ],
+      "knowledge_base": [
+        "knowledge/documentation/ipa-common-frame-2013.md",
+        "knowledge/workflows/questioning-guidance.md",
+        "templates/01_要件定義/"
+      ],
+      "workflow": "workflows/requirements-definition.md",
+      "model": "sonnet"
+    },
+    "system-architect": {
+      "name": "システムアーキテクト（基本設計）",
+      "description": "要件定義書から基本設計書（IPA準拠）を作成します。システム方式設計、アーキテクチャ設計、IaC設計を担当",
+      "role": "basic_design",
+      "capabilities": [
+        "システム方式設計書（BD001）作成",
+        "アーキテクチャ設計（BD002-BD008）",
+        "IaC設計書（BD009）作成",
+        "技術スタック選定",
+        "非機能要件の技術的解決策提示"
+      ],
+      "knowledge_base": [
+        "knowledge/documentation/ipa-common-frame-2013.md",
+        "knowledge/workflows/questioning-guidance.md",
+        "knowledge/architecture/",
+        "knowledge/iac/",
+        "templates/02_基本設計/"
+      ],
+      "workflow": "workflows/basic-design.md",
+      "model": "sonnet",
+      "requires_input_from": ["requirements-analyst"]
+    },
+    "detailed-designer-app": {
+      "name": "詳細設計者（アプリケーション）",
+      "description": "基本設計からアプリケーションの詳細設計書を作成します。クラス設計、DB設計、API設計を担当",
+      "role": "detailed_design_application",
+      "capabilities": [
+        "クラス設計書（DD001-01）作成",
+        "データベース物理設計書（DD002）作成",
+        "API設計書（DD003）作成",
+        "単体テスト仕様書（DD004）作成",
+        "文書分割の判断"
+      ],
+      "knowledge_base": [
+        "knowledge/documentation/ipa-common-frame-2013.md",
+        "knowledge/documentation/ipa-detailed-design-scaling.md",
+        "knowledge/workflows/questioning-guidance.md",
+        "knowledge/application/",
+        "knowledge/database/",
+        "knowledge/security/",
+        "templates/04_詳細設計/DD001-01_クラス設計書_template.md",
+        "templates/04_詳細設計/DD002_データベース物理設計書_template.md",
+        "templates/04_詳細設計/DD003_API設計書_template.md",
+        "templates/04_詳細設計/DD004_単体テスト仕様書_template.md"
+      ],
+      "workflow": "workflows/detailed-design-app.md",
+      "model": "sonnet",
+      "requires_input_from": ["system-architect"]
+    },
+    "detailed-designer-infra": {
+      "name": "詳細設計者（インフラ）",
+      "description": "基本設計からインフラの詳細設計書（IaCスタック設計）を作成します",
+      "role": "detailed_design_infrastructure",
+      "capabilities": [
+        "Terraformスタック設計書（DD-INF001）作成",
+        "CloudFormationスタック設計書（DD-INF002）作成",
+        "スタック分割判断",
+        "コスト見積もり",
+        "セキュリティ考慮"
+      ],
+      "knowledge_base": [
+        "knowledge/documentation/ipa-common-frame-2013.md",
+        "knowledge/documentation/team-separation-app-infra.md",
+        "knowledge/workflows/questioning-guidance.md",
+        "knowledge/iac/",
+        "templates/04_詳細設計/DD-INF001_Terraformスタック設計書_template.md",
+        "templates/04_詳細設計/DD-INF002_CloudFormationスタック設計書_template.md"
+      ],
+      "workflow": "workflows/detailed-design-infra.md",
+      "model": "sonnet",
+      "requires_input_from": ["system-architect"]
+    },
+    "design-reviewer": {
+      "name": "設計レビュアー",
+      "description": "作成された設計書のレビューを行い、IPA準拠性、品質、整合性を確認します",
+      "role": "design_review",
+      "capabilities": [
+        "IPA準拠性チェック",
+        "文書間の整合性確認",
+        "セキュリティリスク検出",
+        "パフォーマンスボトルネック検出",
+        "コスト最適化提案",
+        "文書分割の適切性確認"
+      ],
+      "knowledge_base": [
+        "knowledge/documentation/ipa-common-frame-2013.md",
+        "knowledge/documentation/ipa-detailed-design-scaling.md",
+        "knowledge/documentation/team-separation-app-infra.md",
+        "knowledge/",
+        "templates/"
+      ],
+      "workflow": "workflows/design-review.md",
+      "model": "sonnet",
+      "requires_input_from": ["requirements-analyst", "system-architect", "detailed-designer-app", "detailed-designer-infra"]
+    },
+    "documentation-assistant": {
+      "name": "ドキュメント統括アシスタント",
+      "description": "DD000詳細設計総括など、全体を俯瞰する文書の作成・更新を支援します",
+      "role": "documentation_coordination",
+      "capabilities": [
+        "DD000詳細設計総括の作成・更新",
+        "文書索引の管理",
+        "文書間リンクの整合性確認",
+        "進捗状況の可視化"
+      ],
+      "knowledge_base": [
+        "knowledge/documentation/ipa-detailed-design-scaling.md",
+        "templates/04_詳細設計/DD000_詳細設計総括.md"
+      ],
+      "workflow": "workflows/documentation-coordination.md",
+      "model": "haiku"
+    }
+  },
+  "workflows": {
+    "full-sdlc": {
+      "name": "完全SDLC（要件定義→基本設計→詳細設計）",
+      "description": "要件定義から詳細設計まで一貫してサポート",
+      "phases": [
+        {
+          "name": "要件定義",
+          "agent": "requirements-analyst",
+          "output": "templates/01_要件定義/実成果物/"
+        },
+        {
+          "name": "基本設計",
+          "agent": "system-architect",
+          "output": "templates/02_基本設計/実成果物/"
+        },
+        {
+          "name": "詳細設計（アプリ）",
+          "agent": "detailed-designer-app",
+          "output": "templates/04_詳細設計/実成果物/01_アプリ/"
+        },
+        {
+          "name": "詳細設計（インフラ）",
+          "agent": "detailed-designer-infra",
+          "output": "templates/04_詳細設計/実成果物/02_インフラ/"
+        },
+        {
+          "name": "設計レビュー",
+          "agent": "design-reviewer",
+          "output": "reviews/"
+        }
+      ]
+    },
+    "requirements-only": {
+      "name": "要件定義のみ",
+      "description": "要件定義書の作成のみを支援",
+      "phases": [
+        {
+          "name": "要件定義",
+          "agent": "requirements-analyst",
+          "output": "templates/01_要件定義/実成果物/"
+        }
+      ]
+    },
+    "basic-design-from-requirements": {
+      "name": "基本設計（要件定義書から）",
+      "description": "既存の要件定義書から基本設計を作成",
+      "phases": [
+        {
+          "name": "基本設計",
+          "agent": "system-architect",
+          "output": "templates/02_基本設計/実成果物/"
+        }
+      ]
+    },
+    "detailed-design-from-basic": {
+      "name": "詳細設計（基本設計書から）",
+      "description": "既存の基本設計書から詳細設計を作成",
+      "phases": [
+        {
+          "name": "DD000総括作成",
+          "agent": "documentation-assistant",
+          "output": "templates/04_詳細設計/DD000_詳細設計総括.md"
+        },
+        {
+          "name": "詳細設計（アプリ）",
+          "agent": "detailed-designer-app",
+          "output": "templates/04_詳細設計/実成果物/01_アプリ/"
+        },
+        {
+          "name": "詳細設計（インフラ）",
+          "agent": "detailed-designer-infra",
+          "output": "templates/04_詳細設計/実成果物/02_インフラ/"
+        }
+      ]
+    }
+  },
+  "templates": {
+    "requirements": {
+      "path": "templates/01_要件定義/",
+      "documents": [
+        "RD001_システム化要求定義書_template.md",
+        "RD002_業務要件定義書_template.md",
+        "RD003_機能要件定義書_template.md",
+        "RD004_非機能要件定義書_template.md",
+        "RD005_ユースケース記述書_template.md",
+        "RD006_画面要件定義書_template.md",
+        "RD007_帳票要件定義書_template.md"
+      ]
+    },
+    "basic_design": {
+      "path": "templates/02_基本設計/",
+      "documents": [
+        "BD001_システム方式設計書_template.md",
+        "BD002_アプリケーション方式設計書_template.md",
+        "BD003_データベース方式設計書_template.md",
+        "BD004_ネットワーク構成設計書_template.md",
+        "BD005_セキュリティ設計書_template.md",
+        "BD006_運用設計書_template.md",
+        "BD007_移行設計書_template.md",
+        "BD008_テスト方針書_template.md",
+        "BD009_IaC設計書_template.md"
+      ]
+    },
+    "detailed_design": {
+      "path": "templates/04_詳細設計/",
+      "documents": [
+        "DD000_詳細設計総括.md",
+        "DD001-01_クラス設計書_template.md",
+        "DD002_データベース物理設計書_template.md",
+        "DD003_API設計書_template.md",
+        "DD004_単体テスト仕様書_template.md",
+        "DD-INF001_Terraformスタック設計書_template.md",
+        "DD-INF002_CloudFormationスタック設計書_template.md"
+      ]
+    }
+  },
+  "knowledge": {
+    "ipa_standards": [
+      "knowledge/documentation/ipa-common-frame-2013.md",
+      "knowledge/documentation/ipa-detailed-design-scaling.md"
+    ],
+    "team_collaboration": [
+      "knowledge/documentation/team-separation-app-infra.md"
+    ],
+    "questioning": [
+      "knowledge/workflows/questioning-guidance.md"
+    ],
+    "best_practices": [
+      "knowledge/application/",
+      "knowledge/architecture/",
+      "knowledge/database/",
+      "knowledge/iac/",
+      "knowledge/security/"
+    ]
+  }
+}
