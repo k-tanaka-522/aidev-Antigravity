@@ -12,7 +12,6 @@
         "ユースケース分析"
       ],
       "knowledge_base": [
-        "knowledge/documentation/ipa-common-frame-2013.md",
         "knowledge/workflows/questioning-guidance.md",
         "templates/01_要件定義/"
       ],
@@ -31,7 +30,6 @@
         "非機能要件の技術的解決策提示"
       ],
       "knowledge_base": [
-        "knowledge/documentation/ipa-common-frame-2013.md",
         "knowledge/workflows/questioning-guidance.md",
         "knowledge/architecture/",
         "knowledge/iac/",
@@ -53,8 +51,8 @@
         "文書分割の判断"
       ],
       "knowledge_base": [
-        "knowledge/documentation/ipa-common-frame-2013.md",
         "knowledge/documentation/ipa-detailed-design-scaling.md",
+        "knowledge/documentation/team-separation-app-infra.md",
         "knowledge/workflows/questioning-guidance.md",
         "knowledge/application/",
         "knowledge/database/",
@@ -80,7 +78,6 @@
         "セキュリティ考慮"
       ],
       "knowledge_base": [
-        "knowledge/documentation/ipa-common-frame-2013.md",
         "knowledge/documentation/team-separation-app-infra.md",
         "knowledge/workflows/questioning-guidance.md",
         "knowledge/iac/",
@@ -104,7 +101,6 @@
         "文書分割の適切性確認"
       ],
       "knowledge_base": [
-        "knowledge/documentation/ipa-common-frame-2013.md",
         "knowledge/documentation/ipa-detailed-design-scaling.md",
         "knowledge/documentation/team-separation-app-infra.md",
         "knowledge/",
@@ -250,7 +246,6 @@
   },
   "knowledge": {
     "ipa_standards": [
-      "knowledge/documentation/ipa-common-frame-2013.md",
       "knowledge/documentation/ipa-detailed-design-scaling.md"
     ],
     "team_collaboration": [
