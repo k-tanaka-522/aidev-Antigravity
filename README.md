@@ -33,7 +33,23 @@ AIが生成したコードや機能を鵜呑みにしません。
 
 ---
 
-## 👥 エージェントチーム (The Team)
+## � 使い方 (Usage)
+
+既存のプロジェクトに、このエージェントチームを召喚（インストール）するコマンドです。
+Git Bash (Windows) または Terminal (Mac/Linux) で実行してください。
+
+```bash
+# 既存プロジェクトのルートディレクトリで実行
+git clone https://github.com/k-tanaka-522/aidev-Antigravity.git .antigravity_temp
+cp -r .antigravity_temp/.agent .
+rm -rf .antigravity_temp
+
+# 完了！ .agent ディレクトリが追加されました。
+```
+
+---
+
+## �👥 エージェントチーム (The Team)
 
 各エージェントは、 `.agent/personas/` に定義された役割と特定のツールセットを持っています。
 
