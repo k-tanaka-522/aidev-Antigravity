@@ -42,9 +42,10 @@ Git Bash (Windows) または Terminal (Mac/Linux) で実行してください。
 # 既存プロジェクトのルートディレクトリで実行
 git clone https://github.com/k-tanaka-522/aidev-Antigravity.git .antigravity_temp
 cp -r .antigravity_temp/.agent .
+cp .antigravity_temp/ARCHITECTURE.md .
 rm -rf .antigravity_temp
 
-# 完了！ .agent ディレクトリが追加されました。
+# 完了！ .agent ディレクトリと ARCHITECTURE.md が追加されました。
 ```
 
 ---
