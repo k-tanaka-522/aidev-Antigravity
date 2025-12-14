@@ -15,7 +15,7 @@
         "knowledge/workflows/questioning-guidance.md",
         "templates/01_要件定義/"
       ],
-      "workflow": "workflows/requirements-definition.md",
+      "workflow": "workflows/02-requirements.md",
       "model": "sonnet"
     },
     "system-architect": {
@@ -35,7 +35,7 @@
         "knowledge/iac/",
         "templates/02_基本設計/"
       ],
-      "workflow": "workflows/basic-design.md",
+      "workflow": "workflows/03-basic-design.md",
       "model": "sonnet",
       "requires_input_from": ["requirements-analyst"]
     },
@@ -62,7 +62,7 @@
         "templates/04_詳細設計/DD003_API設計書_template.md",
         "templates/04_詳細設計/DD004_単体テスト仕様書_template.md"
       ],
-      "workflow": "workflows/detailed-design-app.md",
+      "workflow": "workflows/04-detailed-design-app.md",
       "model": "sonnet",
       "requires_input_from": ["system-architect"]
     },
@@ -84,7 +84,7 @@
         "templates/04_詳細設計/DD-INF001_Terraformスタック設計書_template.md",
         "templates/04_詳細設計/DD-INF002_CloudFormationスタック設計書_template.md"
       ],
-      "workflow": "workflows/detailed-design-infra.md",
+      "workflow": "workflows/05-detailed-design-infra.md",
       "model": "sonnet",
       "requires_input_from": ["system-architect"]
     },
@@ -106,7 +106,7 @@
         "knowledge/",
         "templates/"
       ],
-      "workflow": "workflows/design-review.md",
+      "workflow": "workflows/review.md",
       "model": "sonnet",
       "requires_input_from": ["requirements-analyst", "system-architect", "detailed-designer-app", "detailed-designer-infra"]
     },
